@@ -1,6 +1,6 @@
 # InPose
 
-This is the repository that contains source code for [InPose ICLR](https://iclrinpose-crypto.github.io/ICLRInPose/).
+This is the repository that contains source code for the [InPose ICLR Website](https://iclrinpose-crypto.github.io/ICLRInPose/).
 
 Adapted from https://nerfies.github.io
 # Website License
