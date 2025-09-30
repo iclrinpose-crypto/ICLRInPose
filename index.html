@@ -158,9 +158,6 @@
   </div>
 </section>
 
-
-
-
 <section class="section">
   <div class="container is-max-desktop">
     <!-- Abstract. -->
@@ -179,16 +176,36 @@
           </p>
         </div>
       </div>
-    </div>
     <!--/ Abstract. -->
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+        <img src="./static/images/Formulation_v4.png"
+              class="main-image"
+              alt="Interpolation end reference image."/>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
       <h2 class="subtitle has-text-centered">
-        <span class="dnerf">InPose</span> is able to estimate human pose from 3-point measurements without needing user specific fine-tuning
+        We propose full body 3D pose estimation from sparse sensors as an inverse problem, for which we learn the prior through a diffusion model.
       </h2>
+      <p>
+        Our core observation is that any human's full-body pose can be decomposed into a ''scale-free pose'' and a scale-dependent component.  
+        For human poses, the scale-free pose can be imagined as a template human body whose skeletal joints (e.g., shoulders, elbows, hip, knees, etc.) are rotated appropriately to create a given pose.
+        The scale-dependent component is the location of the joints in 3D space.
+        Forward kinematics relates the scale-free pose, along with the body size, to the scale-dependent component.
+        Since the sensors give &lt;location, rotation&gt; measurements from 3 body joints, it is possible to estimate a distribution of scale-free poses from rotational measurements alone.
+        Then, the location measurements can be used to sharpen this distribution to poses that best explain jointly both the rotation and location measurements.
+        This decomposition lends itself to an inverse problem formulation, shown visually in the Figure above.
+        Using &lt;location, rotation&gt; measurements from 3 body joints---head and two wrists---<span class="dnerf">InPose</span> aims to track the locations of all 22 body joints, necessary to fully define the full 3D pose of a human.
     </div>
   </div>
 </section>
@@ -222,51 +239,33 @@
                     type="video/mp4">
           </video>
         </div>
-        <!-- <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
-        </div> -->
       </div>
     </div>
+    
+    <h2 class="subtitle has-text-centered">
+      Left is ground truth, right is <span class="dnerf">InPose</span>.
+    </h2>
   </div>
 </section>
 
-<section class="section">
+<!-- <section class="section"> -->
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <h2 class="subtitle has-text-centered">
-        Left is ground truth, right is <span class="dnerf">InPose</span>.
-      </h2>
       <p>
-        The above samples are with only Differential positional signals for Inverse Guidance. 
-        CFG based positional guidance is not used.
-        Neither CFG nor the inverse guidance provide translation signals to the diffusion model.
-        <span class="dnerf">InPose</span> figures out lower body movement using the prior learnt by the model
-        Note the catastrophic failure for the last case.
+        Each of the above samples shows pose tracking results for a few second segments. 
+        Errors are shown using <span style="color:teal;">colors</span> <span style="color:red;">(more red indicates higher error)</span>.
+        <span class="dnerf">InPose</span> figures out lower body movement using the prior learnt by the model.
+      </p>
+      <p>
+        <br>
+      </p>
+      <p>
+        Note the catastrophic failure in Sample #4, where the algorithm can't identify that the user is lying on the ground.
+        This is alleviated in the samples below by modifying the algorithm.
       </p>
     </div>
   </div>
-</section>
+<!-- </section> -->
 
 
 <section class="hero is-light is-small">
@@ -297,111 +296,145 @@
                     type="video/mp4">
           </video>
         </div>
-        <!-- <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
-        </div> -->
       </div>
     </div>
+    <h2 class="subtitle has-text-centered">
+      Left is ground truth, right is <span class="dnerf">InPose</span>.
+    </h2>
   </div>
 </section>
 
-<section class="section">
+<!-- <section class="section"> -->
   <div class="container is-max-desktop">
     <div class="hero-body">
       <p>
-        Catastrophic failures can be alleviated by adding the Head position to the CFG guidance. 
-        The arm motion is generated through inverse guidance.
+        We address catastrophic failures by giving head position to CFG guidance.
+        The modified algorithm improves the lower body pose estimates over the previous results (compare Sample #1 here with Sample #4 above).
       </p>
     </div>
   </div>
-</section>
+<!-- </section> -->
 
 
 <section class="hero is-light is-small">
   <div class="hero-body">
     <div class="container">
       <div id="results-carousel" class="carousel results-carousel">
+
         <div class="item item-steve">
           <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
             <source src="./static/videos/seq40_mod_up14.mp4"
                     type="video/mp4">
           </video>
         </div>
+
         <div class="item item-chair-tp">
           <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
             <source src="./static/videos/seq88_mod_up07.mp4"
                     type="video/mp4">
           </video>
         </div>
+
         <div class="item item-shiba">
           <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
             <source src="./static/videos/seq41_mod_up14.mp4"
                     type="video/mp4">
           </video>
         </div>
+
         <div class="item item-fullbody">
           <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
             <source src="./static/videos/seq72_mod_up07.mp4"
                     type="video/mp4">
           </video>
         </div>
-        <!-- <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
-        </div> -->
+
+      </div>
+    </div>
+    <h2 class="subtitle has-text-centered">
+      Left is ground truth, right is <span class="dnerf">InPose</span>.
+    </h2>
+  </div>
+</section>
+
+<div class="container is-max-desktop">
+  <div class="hero-body">
+    <p>
+      Outlier body shapes can also be handled by the inverse guidance.
+      This robustness allows the utilization of training data from any subject.
+    </p>
+  </div>
+</div>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+        <img src="./static/images/Qualitative_3.png"
+              class="qualitative-image"
+              alt="Interpolation end reference image."/>
       </div>
     </div>
   </div>
 </section>
 
+
 <section class="section">
   <div class="container is-max-desktop">
+    <div class="columns is-centered">
+        <img src="./static/images/Qualitative_4.png"
+              class="qualitative-image"
+              alt="Interpolation end reference image."/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container is-max-desktop">
     <div class="hero-body">
       <p>
-        Extreme body shapes can also be handled by the inverse guidance.
-        This robustness allows the utilization of training data from any subject.
+        Unlike existing baselines, <span class="dnerf">InPose</span> is able to generalize to varied body scales due to the inverse formulation underlying our proposed algorithm.
       </p>
+    </div>
+</div>
+
+
+<section class="section">
+  <div id="graph-carousel">
+    <div class="slider">
+      <div id="graph-carous" class="slider-container">
+
+        <div class="slider-item item-noise">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-5by3 is-covered">
+                <img src="./static/images/Noise_mpjpe.png" alt>
+                </figure>
+              </div>
+            </div>
+        </div>
+
+        <div class="slider-item item-jre">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-5by3 is-covered">
+                <img src="./static/images/Noise_mpjpe.png" alt>
+                </figure>
+              </div>
+            </div>
+        </div>
+
+        <div class="slider-item item-jpe">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-5by3 is-covered">
+                <img src="./static/images/Noise_mpjpe.png" alt>
+                </figure>
+              </div>
+            </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
@@ -417,13 +450,11 @@
       </div>
     </div> -->
     <!--/ Paper video. -->
-  </div>
 
-
-<section class="section">
+<!-- <section class="section">
   <div class="container is-max-desktop">
 
-    <div class="columns is-centered">
+    <div class="columns is-centered"> -->
 
       <!-- Visual Effects. -->
       <!-- <div class="column">
@@ -458,7 +489,7 @@
 
         </div>
       </div> -->
-    </div>
+    <!-- </div> -->
     <!--/ Matting. -->
 
     <!-- Animation. -->
@@ -553,21 +584,21 @@
     </div> -->
     <!--/ Concurrent Work. -->
 
-  </div>
-</section>
+  <!-- </div>
+</section> -->
 
 
-<section class="section" id="BibTeX">
+<!-- <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <!-- <pre><code>@article{park2021nerfies,
+    <pre><code>@article{park2021nerfies,
   author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
   title     = {Nerfies: Deformable Neural Radiance Fields},
   journal   = {ICCV},
   year      = {2021},
-}</code></pre> -->
+}</code></pre>
   </div>
-</section>
+</section> -->
 
 
 <footer class="footer">
