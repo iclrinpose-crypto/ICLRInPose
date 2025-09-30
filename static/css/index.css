@@ -144,6 +144,7 @@ body {
 }
 
 .main-image {
+  float: center;
   width: 50%;
   border-radius: 5px;
 }
@@ -151,6 +152,23 @@ body {
 .qualitative-image {
   width: 70%;
   border-radius: 5px;
+}
+
+.qualitative-imagea {
+  width: 78%;
+  border-radius: 5px;
+}
+
+.img-container {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 .graph-image {
